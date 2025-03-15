@@ -8,7 +8,7 @@ const HomeScreenStyles = StyleSheet.create({
   taskListContainer: {
     paddingTop: 20,
     paddingHorizontal: 20,
-    paddingBottom: 90,  // ✅ Prevents overlap with the floating button
+    paddingBottom: 90, 
   },
   addButton: {
     position: 'absolute',
