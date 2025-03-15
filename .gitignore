@@ -1,0 +1,65 @@
+# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+
+# Dependencies
+node_modules/
+
+# Expo
+.expo/
+.expo-shared/
+dist/
+web-build/
+expo-env.d.ts
+
+# Native
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+.cache/
+*.tmp
+
+# Debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+*.log
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Local env files
+.env*.local
+.env
+.env.development
+.env.production
+.env.test
+.env.example
+
+# TypeScript
+*.tsbuildinfo
+
+# Editor / IDE settings
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+
+# Miscellaneous
+*.bak
+*.backup
+*.sqlite
+*.sqlite-journal
