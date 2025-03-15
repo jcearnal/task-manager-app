@@ -1,53 +1,48 @@
-import React, { useState } from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import React, { useContext } from 'react';
+import { View, FlatList, TouchableOpacity, Text } from 'react-native';
 import Header from './Header';
 import Task from './Task';
-import taskData from './taskData';
+import { TaskContext } from './TaskContext'; 
+import styles from '../styles/HomeScreenStyles';
 
 const HomeScreen = ({ navigation }) => {
-  const [tasks, setTasks] = useState(taskData);
-
-  console.log("Initial Task List:", tasks.map(task => `${task.title} (Completed: ${task.completed})`));
-
-  const toggleTaskCompletion = (taskId) => {
-    setTasks(prevTasks => {
-      const updatedTasks = prevTasks.map(task =>
-        task.id === taskId ? { ...task, completed: !task.completed } : task
-      );
-      console.log("Updated Task List:", updatedTasks.map(task => `${task.title} (Completed: ${task.completed})`));
-      return updatedTasks;
-    });
-  };
+  const { tasks, addTask, deleteTask, toggleTaskCompletion } = useContext(TaskContext);
 
   return (
     <View style={styles.container}>
       <Header />
-      <ScrollView contentContainerStyle={styles.taskListContainer}>
-        {tasks.map(task => (
+
+      <FlatList
+        data={tasks}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
           <Task 
-            key={task.id} 
-            task={task} 
-            toggleCompletion={toggleTaskCompletion} 
-            onPress={() => {
-              console.log(`Opening Task Details for: ${task.title}`);
-              navigation.navigate('TaskDetails', { task });
+            task={item} 
+            toggleCompletion={(taskId) => {
+              console.log("Toggling task completion for ID:", taskId);
+              toggleTaskCompletion(taskId);
             }} 
+            deleteTask={(taskId) => {
+              console.log("Deleting task with ID:", taskId);
+              deleteTask(taskId);
+            }}
+            onPress={() => {
+              console.log("Navigating to Task Details for:", item.title);
+              navigation.navigate('TaskDetails', { task: item });
+            }}
           />
-        ))}
-      </ScrollView>
+        )}
+        contentContainerStyle={styles.taskListContainer}
+      />
+
+      <TouchableOpacity 
+        style={styles.addButton} 
+        onPress={() => navigation.navigate('AddTask')}
+      >
+        <Text style={styles.addButtonText}>+</Text>
+      </TouchableOpacity>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#121212',
-  },
-  taskListContainer: {
-    paddingTop: 20,
-    paddingHorizontal: 20,
-  },
-});
 
 export default HomeScreen;

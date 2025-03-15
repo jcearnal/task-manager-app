@@ -1,43 +1,35 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import Header from './Header';
+import styles from '../styles/TaskDetailsStyles';
+
+// Task category images
+const taskImages = {
+  Home: require('../assets/task1.png'),
+  Work: require('../assets/task2.png'),
+  Personal: require('../assets/task3.png'),
+};
 
 const TaskDetails = ({ route }) => {
-  const { task } = route.params;
-
-  console.log(`Viewing Task Details: ${task.title}`);
+  const { task } = route.params; // Get task details from navigation params
 
   return (
     <View style={styles.container}>
       <Header />
       <View style={styles.content}>
-        {/* Ensure all text is inside a <Text> component */}
+        {/* Task category icon */}
+        <Image source={taskImages[task.category]} style={styles.taskIcon} />
         <Text style={styles.title}>{task.title}</Text>
         <Text style={styles.description}>{task.description}</Text>
+        <Text style={styles.category}>
+          <Text style={styles.bold}>Category:</Text> {task.category}
+        </Text>
+        <Text style={styles.date}>
+          <Text style={styles.bold}>Date & Time:</Text> {task.date}
+        </Text>
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#1e1e1e',
-  },
-  content: {
-    padding: 20,
-    marginTop: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  description: {
-    fontSize: 16,
-    color: '#ccc',
-    marginTop: 10,
-  },
-});
 
 export default TaskDetails;
